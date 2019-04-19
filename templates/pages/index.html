@@ -1,0 +1,153 @@
+{% extends 'base.html' %} 
+
+{% load humanize %}
+
+{% block title  %} Welcome{% endblock %}
+
+{% block content %}
+  <section id="carousels" class="py-8">
+    <div id="demo" class="carousel slide" data-ride="carousel">
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+    <li data-target="#demo" data-slide-to="3"></li>
+  </ul>
+  <div class="carousel-inner">
+
+    {% if articles_carousel %}
+      <div class="carousel-item active">
+          <a href={{ articles_carousel_active.address }}> 
+          <img src={{ articles_carousel_active.photo_url }} alt="Los Angeles" width="1100" height="500">
+          <div class="carousel-caption">
+            <h3>{{ articles_carousel_active.website.name }}</h3>
+            <p>{{ articles_carousel_active.subject }}</p>
+          </div>
+          </a>   
+      </div>
+
+      {% for article in articles_carousel %}
+        <div class="carousel-item">
+          <a href={{ article.address }}> 
+          <img src={{ article.photo_url }} alt="Los Angeles" width="1100" height="500">
+          <div class="carousel-caption">
+            <h3>{{ article.website.name }}</h3>
+            <p>{{ article.subject }}</p>
+          </div>
+          </a>   
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+  </section>
+
+  
+  <!-- Listings -->
+  <section id="listings" class="py-4">
+    <div class="container">
+      <div class="row">
+
+        {% if articles_listing %}
+          {% for article in articles_listing  %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card listing-preview">
+                  <img class="card-img-top" src={{ article.photo_url }} alt="">
+                  <div class="card-img-overlay">
+                    <h2>
+                      <span class="badge badge-secondary text-white">{{ article.website.name }}</span>
+                    </h2>
+                  </div>
+                  <div class="card-body">
+                    <div class="listing-heading text-center">
+                      <h4 class="text-primary">{{ article.subject }}</h4>
+                      <p>
+                    </div>
+                    <a href={{ article.address }} class="btn btn-primary btn-block">More Info</a>
+                  </div>
+                </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="col-md-12">
+            <p>No Available Article</p>
+          </div>
+        {% endif %}
+        <!-- listing -->
+
+      <div class="row">
+        <div class="col-md-12">
+          {% if articles_listing.has_other_pages %}
+          <ul class="pagination">
+            {% if articles_listing.has_previous %}
+              <li class="page-item">
+                <a href= "?page={{articles_listing.previous_page_number}}" class="page-link">&laquo;
+                </a>
+              </li>
+            {% else %}
+              <li class= "page-item disabled">
+                <a class="page-link">&laquo;</a>
+              </li>
+            {% endif %}
+            {% for i in articles_listing.paginator.page_range %}
+              {% if articles_listing.number == i %}
+                <li class ="page-item active">
+                  <a class ="page-link">{{i}}</a>
+                </li>
+              {% else %}
+                <li class = "page-item">
+                  <a href="?page={{i}}" class= "page-link">{{i}}</a>
+                </li>
+              {% endif %}
+
+            {% endfor %}
+              {% if articles_listing.has_next %}
+              <li class="page-item">
+                <a href= "?page={{articles_listing.next_page_number}}" class="page-link">&raquo;
+                </a>
+              </li>
+            {% else %}
+              <li class= "page-item disabled">
+                <a class="page-link">&raquo;</a>
+              </li>
+            {% endif %}
+            </ul>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section id="services" class="py-5 bg-secondary text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fas fa-random fa-4x mr-4"></i>
+          <hr>
+          <h3>高延展性</h3>
+          <p>此爬蟲網站並未把程式寫死，除了可以查詢AI相關議題外，只要去後台新增想要查詢的內容即可增加查詢標籤</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-cloud fa-4x mr-4"></i>
+          <hr>
+          <h3>自動部署</h3>
+          <p>結合了Circle CI 自動部署，並使用kubernetes部署至digital ocean</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-plug fa-4x mr-4"></i>
+          <hr>
+          <h3>開放的Api</h3>
+          <p>網站內的任何功能都可以透過api來呼叫</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
