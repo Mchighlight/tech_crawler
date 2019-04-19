@@ -3,6 +3,7 @@ create a website aggregate 10 AI-related news each from Bloomberg technology and
 # About
 create a website aggregate 10 AI-related news each from Bloomberg technology and TNW, using python.
 trello: https://trello.com/b/mSgLmYGB/deveploment-process
+![alt text](https://i.imgur.com/VA2j4Rm.jpg)
 ### Domain
 http://henryhuang.pro/
 # Develop Environment
