@@ -40,7 +40,7 @@
           <p class="card-text"><h6>如何爬</h6>  將bloomberg及TNW寫成不同的兩個Scripts(不寫在一起是因為之後還可更新更多爬的網站)，但基本上爬的方式有點相似， bloomberg及TNW都有專屬的AI版，但TNW的AI版非常雜亂，因此我改用查詢去找AI related topic。其中在爬bloomberg時遇到相當大的困難，網站會抓爬蟲機器人，因此要稍微延遲才能抓到文章。</p>
         
           <h2>How backend work ?</h2>
-          <p class="lead">網站並非只將爬下資料放到前端，加上一些HTML, CSS就結束。網站會定期做排成更新AI related topic，使用者也可手動去啟動爬蟲程式</p>
+          <p class="lead">後端會定期做排成更新AI related topic，使用者也可手動去啟動爬蟲程式</p>
           <img src="{% static 'img/backend.png' %}" alt="">
           <p class="mt-8">將後端分成兩部分，第一是API的呼叫， 第二是定期排程及異步的處理</p>
           <p class="card-text"><h6>Restful API</h6>這裡有三個API可以呼叫，分別是article(文章內容), website(網站資訊)及multitask(設定排程時間及爬蟲異步端口，下圖為API的呼叫方法及功能</p>
@@ -56,10 +56,8 @@
 
           <h2>How to deploy on the Digital Ocean work ?</h2>
           <p class="lead">此次部屬並未在Google Cloud Platform上部署，也並未按照Git flow去跑，日後再新增此功能</p>
-          <img src="https://community-cdn-digitalocean-com.global.ssl.fastly.net/assets/tutorials/images/large/dhango_applications_tw.jpg?1426863312" alt="">
-          <p class="mt-8">前端並不是我比較專長的部分，主要是寫後端邏輯及API端口，之前公司是做client及server side分離，然而就公司是使用React而我不會寫react。因此此網站混到client side較非漂亮的做法</p>
-          <p class="card-text"><h6>介面介紹</h6>上面的nav bar分別是Home主頁, About未來展望及設計過程, Update content則為抓取新的爬蟲文章</p>
-
+          <img src="{% static 'img/server_deployment.png' %}" alt="">
+          <p class="mt-8">網站並未加上docker去將整個環境包起來，主要是因為有一個爬蟲的driver要執行，因此較適合單純用virtual machine去部署。rabbitmq及celery沒用docker去包裝，但依然可用supervisor做到自動執行功能</p>
           <h2>How to enter django admin ?</h2>
           <h6>首頁加上/admin及為後台，後台密碼請email索取</h6>
         </div>
@@ -91,9 +89,9 @@
   <!-- More -->
   <section id="work" class="bg-dark text-white text-center">
     <h2 class="display-4">More information about this project</h2>
-    <h4>點擊此連結來看整個crawler project進度</h4>
+    <h4>點擊此連結來查看網站Github</h4>
     <hr>
-    <a href="https://trello.com/b/mSgLmYGB/deveploment-process" class="btn btn-secondary text-white btn-lg">View my trello process</a>
+    <a href="https://github.com/Mchighlight/tech_crawler" class="btn btn-secondary text-white btn-lg">View my website repository</a>
   </section>
 
   <!-- Developer -->

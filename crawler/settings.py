@@ -73,20 +73,20 @@ WSGI_APPLICATION = 'crawler.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'localhost',
-        'NAME': 'crawler',
-        'USER': 'crawler',
-        'PASSWORD': 'Mc110164',
+        'HOST': os.getenv('DB_HOST', 'crawler_host'),
+        'NAME': os.getenv('DB_NAME', 'crawler_name'),
+        'USER': os.getenv('DB_USER', 'crawler_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
         'PORT': 5432
     }
 }
 
 # rabbitmq
-RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'localhost')
+RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'rabbitmq_host')
 RABBITMQ_PORT = os.getenv('RABBITMQ_PORT', 5672)
-RABBITMQ_DEFAULT_USER = os.getenv('RABBITMQ_DEFAULT_USER', 'Mchighlight')
-RABBITMQ_DEFAULT_PASS = os.getenv('RABBITMQ_DEFAULT_PASS', 'sos123456')
-RABBITMQ_DEFAULT_VHOST = os.getenv('RABBITMQ_DEFAULT_VHOST', 'crawler')
+RABBITMQ_DEFAULT_USER = os.getenv('RABBITMQ_DEFAULT_USER', 'rabbitmq_user')
+RABBITMQ_DEFAULT_PASS = os.getenv('RABBITMQ_DEFAULT_PASS')
+RABBITMQ_DEFAULT_VHOST = os.getenv('RABBITMQ_DEFAULT_VHOST', 'rabbitmq_vhost')
 
 
 # celery
