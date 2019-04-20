@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django_celery_beat',
     'rest_framework',
     'article',
     'multitask',
@@ -79,6 +80,18 @@ DATABASES = {
         'PORT': 5432
     }
 }
+
+# rabbitmq
+RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'localhost')
+RABBITMQ_PORT = os.getenv('RABBITMQ_PORT', 5672)
+RABBITMQ_DEFAULT_USER = os.getenv('RABBITMQ_DEFAULT_USER', 'Mchighlight')
+RABBITMQ_DEFAULT_PASS = os.getenv('RABBITMQ_DEFAULT_PASS', 'sos123456')
+RABBITMQ_DEFAULT_VHOST = os.getenv('RABBITMQ_DEFAULT_VHOST', 'crawler')
+
+
+# celery
+CELERY_BROKER_URL = f'amqp://{RABBITMQ_DEFAULT_USER}:{RABBITMQ_DEFAULT_PASS}' \
+                    f'@{RABBITMQ_HOST}:{RABBITMQ_PORT}/{RABBITMQ_DEFAULT_VHOST}'
 
 
 # Password validation

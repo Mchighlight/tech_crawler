@@ -3,7 +3,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
-from .task import cronjob
+from .tasks import cronjob
 from .models import Cronjob
 from .serializers import CronJobSerializer
 
@@ -13,7 +13,7 @@ class CrawlerViewSet( viewsets.ViewSet):
     def task(self, request):
         data = request.data
         try:
-            cronjob(data)
+            cronjob.apply_async(args=[data])
             return Response(data={"message": "asynchronous updating..."}, status=status.HTTP_200_OK) 
         except:
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)  

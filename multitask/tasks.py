@@ -1,13 +1,14 @@
-###
-# celery shit
-###
+from crawler.celery import app, QUEUE_JOBS, QUEUE_CRONJOBS
 from article.models import Article
 from website.models import SearchItem, Website
 
+@app.task(queue=QUEUE_CRONJOBS)
+def test_period():
+    print("testing")
 
+
+@app.task(queue=QUEUE_JOBS)
 def cronjob(data):
-    # site 0 update all
-    print(data)
     crawler_info = {
         'article_num' : int(data.get('article_num')),
         'word' : data.get('word'),
@@ -17,14 +18,17 @@ def cronjob(data):
 
     print(crawler_info)
 
-    original_article = Article.objects.values('website')
-    new_contents = crawler(crawler_info, [i['address'] for i in original_article])
+    original_article = Article.objects.values('address')
+    #new_contents = crawler(crawler_info, [i['address'] for i in original_article])
+    original_article_address = [i['address'] for i in original_article]
+    new_contents = crawler.apply_async(args=[crawler_info, original_article_address])
+    print(new_contents)
     '''
     articles = []
     for content in new_contents :
         new_article = Article(
             subject = content['subject'],
-            website = content['site'],
+            website = Website.objects.filter(id=content['site'])[0],
             address = content['address'],
             photo_url = content['photo_url']
         )
@@ -32,17 +36,7 @@ def cronjob(data):
     Article.objects.bulk_Create(articles)
     '''
 
+@app.task(queue=QUEUE_JOBS)
 def crawler(crawler_info, original_article):
-    after_crawler = []
-    for i in range(10):#預設爬10篇
-        article = {
-            'subject' : 'test subject' + str(i),
-            'website' : 1,
-            'address' : 'www.google.com',
-            'photo_url': 'https://i.imgur.com/8jIFgo0.jpg'
-        }
-        after_crawler.append(article)
-
-    #交叉比對 這是錯的我拿全部去比 TODO:要修改
-    new_article = (list(set(li1) - set(original_article))) 
+    new_article = "hello, word"
     return  new_article
