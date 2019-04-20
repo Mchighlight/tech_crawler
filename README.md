@@ -51,5 +51,4 @@ local起server
 python manage.py runserver 8000
 ```
 The server will then be available at http://127.0.0.1:8000
-## Docker
-未實作
+
