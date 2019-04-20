@@ -32,5 +32,4 @@ local_*
 *_test.py
 *.map
 celerybeat-schedule.db
-/crawler/static
 /crawler/media
