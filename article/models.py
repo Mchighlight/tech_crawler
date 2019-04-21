@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime
-from website.models import Website
+from website.models import Website, SearchItem
 
 class Article(models.Model):
     subject = models.CharField(max_length=1024, blank=False)
@@ -8,6 +8,7 @@ class Article(models.Model):
     address = models.CharField(max_length=255, blank=False)
     upload_time = models.DateTimeField(default=datetime.now, blank=True)
     photo_url = models.CharField(max_length=255, blank=False)
+    topic = models.ForeignKey(SearchItem, on_delete=models.DO_NOTHING, default =1)
 
     class Meta:
         verbose_name = 'article content' 

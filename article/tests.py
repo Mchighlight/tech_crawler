@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from .models import Article
-from website.models import Website
+from website.models import Website, SearchItem
 
 from .serializers import ArticleSerializer
 
@@ -34,7 +34,8 @@ class PrivateAritcleApiTests(TestCase):
 
     def test_retrieve_Article(self):
         create_web = Website.objects.create(name='techcrunch')
-        Article.objects.create(website=create_web, subject="123", address="www.google.com")
+        search_item = SearchItem.objects.create(name='cybersecurity')
+        Article.objects.create(website=create_web, subject="123", address="www.google.com", topic=search_item)
 
         res = self.client.get(ARTICLE_URL)
 

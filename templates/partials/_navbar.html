@@ -9,6 +9,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav">
+          <!--HOME-->
           <li 
             {% if '/' == request.path %}
                 class = "nav-item active mr-3"
@@ -16,8 +17,39 @@
                 class = "nav-item mr-3"
             {% endif %} 
           >
-            <a class="nav-link" href={% url 'index' %}>Home</a>
+            <a class="nav-link" href={% url 'index' %}>HOME</a>
           </li>
+          <!--AI-->
+          <li 
+            {% if '/ai' == request.path %}
+                class = "nav-item active mr-3"
+            {% else %}
+                class = "nav-item mr-3"
+            {% endif %} 
+          >
+            <a class="nav-link" href={% url 'ai' %}>AI</a>
+          </li>
+          <!--IOT-->
+          <li 
+            {% if '/iot' == request.path %}
+                class = "nav-item active mr-3"
+            {% else %}
+                class = "nav-item mr-3"
+            {% endif %} 
+          >
+            <a class="nav-link" href={% url 'iot' %}>IOT</a>
+          </li>
+          <!--CLOUD COMPUTING-->
+          <li 
+            {% if '/cloud_computing' == request.path %}
+                class = "nav-item active mr-3"
+            {% else %}
+                class = "nav-item mr-3"
+            {% endif %} 
+          >
+            <a class="nav-link" href={% url 'cloud_computing' %}>CLOUD COMPUTING</a>
+          </li>
+          <!--ABOUT-->
           <li 
             {% if 'about' in request.path %}
                 class = "nav-item active mr-3"
@@ -34,7 +66,7 @@
                 <input type="hidden" name="article_num" value=20>
                 <input type="hidden" name="word" value="">
                 <input type="hidden" name="site" value=0>
-                <input type="hidden" name="search_item" value=1>
+                <input type="hidden" name="search_item" value=0>
             </form>
           </li>
         </ul>

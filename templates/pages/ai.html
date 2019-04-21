@@ -20,7 +20,7 @@
           <a href={{ articles_carousel_active.address }}> 
           <img src={{ articles_carousel_active.photo_url }} alt="Los Angeles" width="1100" height="500">
           <div class="carousel-caption">
-            <h3>{{ articles_carousel_active.topic.name }}</h3>
+            <h3>{{ articles_carousel_active.website.name }}</h3>
             <p>{{ articles_carousel_active.subject }}</p>
           </div>
           </a>   
@@ -31,7 +31,7 @@
           <a href={{ article.address }}> 
           <img src={{ article.photo_url }} alt="Los Angeles" width="1100" height="500">
           <div class="carousel-caption">
-            <h3>{{ article.topic.name }}</h3>
+            <h3>{{ article.website.name }}</h3>
             <p>{{ article.subject }}</p>
           </div>
           </a>   
@@ -61,7 +61,7 @@
                   <img class="card-img-top" src={{ article.photo_url }} alt="">
                   <div class="card-img-overlay">
                     <h2>
-                      <span class="badge badge-secondary text-white">{{ article.topic.name }}</span>
+                      <span class="badge badge-secondary text-white">{{ article.website.name }}</span>
                     </h2>
                   </div>
                   <div class="card-body">

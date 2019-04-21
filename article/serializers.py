@@ -15,7 +15,8 @@ class ArticleSerializer(serializers.ModelSerializer):
             'website',
             'subject',
             'address',
-            'upload_time'
+            'upload_time',
+            'topic'
         ]
         read_only_Fields = ('id',)
 

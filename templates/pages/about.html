@@ -7,7 +7,7 @@
     <div class="container">
       <div class="row text-center">
         <div class="col-md-12">
-          <h1 class="display-4">About Henry Huang Real Crawler</h1>
+          <h1 class="display-4">About Henry Huang Crawler</h1>
           <p class="lead">在此我們將探討如何使用本網站及未來展望</p>
         </div>
       </div>
@@ -40,7 +40,7 @@
           <p class="card-text"><h6>如何爬</h6>  將bloomberg及TNW寫成不同的兩個Scripts(不寫在一起是因為之後還可更新更多爬的網站)，但基本上爬的方式有點相似， bloomberg及TNW都有專屬的AI版，但TNW的AI版非常雜亂，因此我改用查詢去找AI related topic。其中在爬bloomberg時遇到相當大的困難，網站會抓爬蟲機器人，因此要稍微延遲才能抓到文章。</p>
         
           <h2>How backend work ?</h2>
-          <p class="lead">網站不只是將爬下的資料放上簡單的CSS及HTML，後端會定期更新AI相關文章，使用者也可點擊"Updata Content"去抓取最新文章</p>
+          <p class="lead">網站不只是將爬下的資料放上簡單的CSS及HTML，後端會定期更新AI相關文章，使用者也可點擊"Updata Content"去更AI相關文章</p>
           <img src="{% static 'img/backend.png' %}" alt="">
           <p class="mt-8">將後端分成兩部分，第一是API的呼叫， 第二是定期排程及異步的處理</p>
           <p class="card-text"><h6>Restful API</h6>這裡有三個API可以呼叫，分別是article(文章內容), website(網站資訊)及multitask(設定排程時間及爬蟲異步端口，下圖為API的呼叫方法及功能</p>

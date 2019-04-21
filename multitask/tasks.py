@@ -1,6 +1,7 @@
 from crawler.celery import app, QUEUE_JOBS, QUEUE_CRONJOBS
 from article.models import Article
 from website.models import SearchItem, Website
+from .constans import *
 from pyvirtualdisplay import Display
 from selenium import webdriver
 from bs4 import BeautifulSoup
@@ -8,17 +9,13 @@ import os
 import time
 import random
 
-
-BLOOMBERG_URL = "https://www.bloomberg.com/topics/artificial-intelligence"
-TNW_URL = "https://thenextweb.com/artificial-intelligence/"
-
 @app.task(queue=QUEUE_JOBS)
 def cronjob(data):
     crawler_info = {
         'article_num' :int(data.get('article_num')),
         'word' : data.get('word'),
         'site' : int(data.get('site')),
-        'search_item' : (data.get('search_item'))
+        'search_item' : int(data.get('search_item'))
     }
 
     
@@ -29,13 +26,11 @@ def cronjob(data):
     article = [] 
     if crawler_info['site'] == 0 :
         number_of_article = round(crawler_info['article_num']/2)
-        #bloomberg_article = crawler.apply_async(args=[1, number_of_article])
-        bloomberg_article = crawler(1, number_of_article)
+        bloomberg_article = crawler(1, number_of_article, crawler_info['search_item'])
         print("bloomberg finished")
         if ( len(bloomberg_article) == 0 ):
             number_of_article = crawler_info['article_num']
-        #tnw_article = crawler.apply_async(args=[2, number_of_article])
-        tnw_article = crawler(2, number_of_article)
+        tnw_article = crawler(2, number_of_article, crawler_info['search_item'])
         print("tnw finished")
     
         article.extend(tnw_article)
@@ -48,7 +43,7 @@ def cronjob(data):
         print(len(article))
         new_contents = article
     else :
-        crawler(crawler_info['site'], crawler_info['article_num'])
+        crawler(crawler_info['site'], crawler_info['article_num'], crawler_info['search_item'])
     
     # Add to database
     
@@ -64,11 +59,8 @@ def cronjob(data):
             articles.append(new_article)
         Article.objects.bulk_create(articles)
     
-def crawler( which_website, number_of_article ):
-    if (which_website == 1):
-        url = BLOOMBERG_URL
-    else:
-        url = TNW_URL
+def crawler( which_website, number_of_article, search_item ):
+    url = TOPIC[search_item][str(which_website)]
 
     data = []
     is_repeat = ""
