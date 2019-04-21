@@ -31,7 +31,7 @@ def cronjob(data):
         number_of_article = round(crawler_info['article_num']/2)
         #bloomberg_article = crawler.apply_async(args=[1, number_of_article])
         bloomberg_article = crawler(1, number_of_article)
-        if ( len(bloomberg_article) == 0 ):
+        if bloomberg_article is None:
             number_of_article = crawler_info['article_num']
         #tnw_article = crawler.apply_async(args=[2, number_of_article])
         tnw_article = crawler(2, number_of_article)
