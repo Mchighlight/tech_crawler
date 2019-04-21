@@ -49,6 +49,36 @@
           >
             <a class="nav-link" href={% url 'cloud_computing' %}>CLOUD COMPUTING</a>
           </li>
+          <!--BiG DATA-->
+          <li 
+            {% if '/big_data' == request.path %}
+                class = "nav-item active mr-3"
+            {% else %}
+                class = "nav-item mr-3"
+            {% endif %} 
+          >
+            <a class="nav-link" href={% url 'big_data' %}>BIG DATA</a>
+          </li>
+          <!--MOBILE-->
+          <li 
+            {% if '/mobile' == request.path %}
+                class = "nav-item active mr-3"
+            {% else %}
+                class = "nav-item mr-3"
+            {% endif %} 
+          >
+            <a class="nav-link" href={% url 'mobile' %}>MOBILE</a>
+          </li>
+          <!--SILLICON VALLEY-->
+          <li 
+            {% if '/sillicon_valley' == request.path %}
+                class = "nav-item active mr-3"
+            {% else %}
+                class = "nav-item mr-3"
+            {% endif %} 
+          >
+            <a class="nav-link" href={% url 'sillicon_valley' %}>SILLICON VALLEY</a>
+          </li>
           <!--ABOUT-->
           <li 
             {% if 'about' in request.path %}

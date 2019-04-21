@@ -16,6 +16,21 @@ CLOUD_COMPUTING = {
     '2' : "https://thenextweb.com/vocabulary/cloud-computing/"
 }
 
-TOPIC = [AI, IOT, CLOUD_COMPUTING]
+BIG_DATA = {
+    '1' : "https://www.bloomberg.com/topics/big-data",
+    '2' : "https://thenextweb.com/vocabulary/big-data"
+}
+
+MOBILE = {
+    '1' : "https://www.bloomberg.com/topics/mobile-phones",
+    '2' : "https://thenextweb.com/vocabulary/mobile-app/"
+}
+
+SILLICON_VALLEY = {
+    '1' : "https://www.bloomberg.com/topics/silicon-valley",
+    '2' : "https://thenextweb.com/vocabulary/silicon-valley/"
+}
+
+TOPIC = [AI, IOT, CLOUD_COMPUTING, BIG_DATA, MOBILE, SILLICON_VALLEY]
 
 
