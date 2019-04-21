@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_celery_beat',
     'rest_framework',
+    'rest_framework_swagger',
     'article',
     'multitask',
     'website',
