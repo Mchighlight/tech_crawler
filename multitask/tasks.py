@@ -1,13 +1,14 @@
 from crawler.celery import app, QUEUE_JOBS, QUEUE_CRONJOBS
 from article.models import Article
 from website.models import SearchItem, Website
+from pyvirtualdisplay import Display
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import os 
 import time
 import random
 
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0"
+
 BLOOMBERG_URL = "https://www.bloomberg.com/topics/artificial-intelligence"
 TNW_URL = "https://thenextweb.com/artificial-intelligence/"
 
@@ -43,7 +44,7 @@ def cronjob(data):
         for i in article :
             print(i['subject'])
         print(len(article))
-        new_contents = article
+        new_contents = article[:6]
     else :
         crawler.apply_async(args=[crawler_info['site'], crawler_info['article_num'], USER_AGENT])
     
@@ -63,8 +64,8 @@ def cronjob(data):
     
 
 
-#@app.task(queue=QUEUE_JOBS)
-def crawler( which_website, number_of_article, user_agent ):
+@app.task(queue=QUEUE_JOBS)
+def crawler( which_website, number_of_article ):
     if (which_website == 1):
         url = BLOOMBERG_URL
     else:
@@ -73,50 +74,57 @@ def crawler( which_website, number_of_article, user_agent ):
     data = []
     is_repeat = ""
 
-    options = webdriver.FirefoxOptions()
-    options.add_argument(user_agent)
-    browser = webdriver.Firefox(firefox_options=options,executable_path=os.path.dirname(os.path.abspath(__file__))+'/geckodriver.exe')
+    display = Display(visible=0, size=(800, 600))
+    display.start()
 
-    if which_website == 1:
-        class_name = "index-page__headline"
-        tag_name = "h2"
-    else:
-        class_name = "story-title"
-        tag_name = "h4"
-    browser.get(url)
 
-    page = 10
-    for i in range(1, page):
-        soup = BeautifulSoup(browser.page_source, 'html.parser')
-        for ele in soup.find_all(tag_name, class_=class_name):
-            is_repeat = "" 
-            if  which_website == 1 :
-                for i in range(0, len(data)):
-                    if  ele.text.strip() == data[i]['subject']:
-                        is_repeat = "false"
-                if is_repeat != "false":
-                    if ele.parent.div is not None:
-                        strtemp = ele.parent.div.div.div.get('style')[21:]
-                        data.append({'subject' : ele.text, 'photo_url' : strtemp[:-1], 'website': 1, 'address' : "https://www.bloomberg.com" + ele.parent.get('href')})
-            else:
-                for i in range(0, len(data)):
-                    if ele.a.text.strip() == data[i]['subject'] :
-                        is_repeat = "false"
-                if is_repeat != "false" and ele.parent.parent.a.get('style') is not None :                
-                    strtemp = ele.parent.parent.a.get('style')[23:]
-                    data.append({'subject' : ele.a.text.strip(), 'photo_url' : strtemp[:-3], 'website': 2, 'address' : ele.a.get('href')})
-                                 
+    try:
+        browser = webdriver.Firefox()
+
+        if which_website == 1:
+            class_name = "index-page__headline"
+            tag_name = "h2"
+        else:
+            class_name = "story-title"
+            tag_name = "h4"
+        browser.get(url)
+
+        page = 10
+        for i in range(1, page):
+            soup = BeautifulSoup(browser.page_source, 'html.parser')
+            for ele in soup.find_all(tag_name, class_=class_name):
+                is_repeat = "" 
+                if  which_website == 1 :
+                    for i in range(0, len(data)):
+                        if  ele.text.strip() == data[i]['subject']:
+                            is_repeat = "false"
+                    if is_repeat != "false":
+                        if ele.parent.div is not None:
+                            strtemp = ele.parent.div.div.div.get('style')[21:]
+                            data.append({'subject' : ele.text, 'photo_url' : strtemp[:-1], 'website': 1, 'address' : "https://www.bloomberg.com" + ele.parent.get('href')})
+                else:
+                    for i in range(0, len(data)):
+                        if ele.a.text.strip() == data[i]['subject'] :
+                            is_repeat = "false"
+                    if is_repeat != "false" and ele.parent.parent.a.get('style') is not None :                
+                        strtemp = ele.parent.parent.a.get('style')[23:]
+                        data.append({'subject' : ele.a.text.strip(), 'photo_url' : strtemp[:-3], 'website': 2, 'address' : ele.a.get('href')})
+                                     
+                if len(data) == number_of_article:
+                    break
+
             if len(data) == number_of_article:
                 break
+            if which_website == 1 : 
+                browser.find_element_by_xpath('//div[@class="module-view"]/button[contains(text(), "Load More")]').click()
+            else:
+                browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+            time.sleep(2)
 
-        if len(data) == number_of_article:
-            break
-        if which_website == 1 : 
-            browser.find_element_by_xpath('//div[@class="module-view"]/button[contains(text(), "Load More")]').click()
-        else:
-            browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-        time.sleep(2)
+        browser.quit()
+        display.stop()
 
-    browser.quit()
-
-    return data
+        return data
+    except:
+        print("fail Scratching...")
+        display.stop()
