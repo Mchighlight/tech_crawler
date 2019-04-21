@@ -50,15 +50,15 @@ def cloud_computing(request):
     return render(request, 'pages/category.html', context)
 
 def big_data(request):
-    context = get_topic_article(3, request)
+    context = get_topic_article(4, request)
     return render(request, 'pages/category.html', context)
 
 def mobile(request):
-    context = get_topic_article(3, request)
+    context = get_topic_article(5, request)
     return render(request, 'pages/category.html', context)
 
 def sillicon_valley(request):
-    context = get_topic_article(3, request)
+    context = get_topic_article(6, request)
     return render(request, 'pages/category.html', context)
 
 def about(request):
