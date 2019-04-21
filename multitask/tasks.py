@@ -29,12 +29,12 @@ def cronjob(data):
     article = [] 
     if crawler_info['site'] == 0 :
         number_of_article = round(crawler_info['article_num']/2)
-        #bloomberg_article = crawler.apply_async(args=[1, number_of_article, USER_AGENT])
-        bloomberg_article = crawler(1, number_of_article, USER_AGENT)
+        bloomberg_article = crawler.apply_async(args=[1, number_of_article, USER_AGENT])
+        #bloomberg_article = crawler(1, number_of_article, USER_AGENT)
         if ( len(bloomberg_article) == 0 ):
             number_of_article = crawler_info['article_num']
-        #tnw_article = crawler.apply_async(args=[2, number_of_article, USER_AGENT])
-        tnw_article = crawler(2, number_of_article, USER_AGENT)
+        tnw_article = crawler.apply_async(args=[2, number_of_article, USER_AGENT])
+        #tnw_article = crawler(2, number_of_article, USER_AGENT)
     
         article.extend(tnw_article)
         article.extend(bloomberg_article)
