@@ -29,12 +29,12 @@ def cronjob(data):
     article = [] 
     if crawler_info['site'] == 0 :
         number_of_article = round(crawler_info['article_num']/2)
-        bloomberg_article = crawler.apply_async(args=[1, number_of_article])
-        #bloomberg_article = crawler(1, number_of_article, USER_AGENT)
+        #bloomberg_article = crawler.apply_async(args=[1, number_of_article])
+        bloomberg_article = crawler(1, number_of_article)
         if ( len(bloomberg_article) == 0 ):
             number_of_article = crawler_info['article_num']
-        tnw_article = crawler.apply_async(args=[2, number_of_article])
-        #tnw_article = crawler(2, number_of_article, USER_AGENT)
+        #tnw_article = crawler.apply_async(args=[2, number_of_article])
+        tnw_article = crawler(2, number_of_article)
     
         article.extend(tnw_article)
         article.extend(bloomberg_article)
@@ -46,7 +46,7 @@ def cronjob(data):
         print(len(article))
         new_contents = article[:6]
     else :
-        crawler.apply_async(args=[crawler_info['site'], crawler_info['article_num']])
+        crawlerc(crawler_info['site'], crawler_info['article_num'])
     
     # Add to database
     
@@ -62,9 +62,6 @@ def cronjob(data):
             articles.append(new_article)
         Article.objects.bulk_create(articles)
     
-
-
-@app.task(queue=QUEUE_JOBS)
 def crawler( which_website, number_of_article ):
     if (which_website == 1):
         url = BLOOMBERG_URL
