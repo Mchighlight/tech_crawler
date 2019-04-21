@@ -44,7 +44,7 @@ def cronjob(data):
         for i in article :
             print(i['subject'])
         print(len(article))
-        new_contents = article[:6]
+        new_contents = article
     else :
         crawlerc(crawler_info['site'], crawler_info['article_num'])
     
