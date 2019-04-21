@@ -46,7 +46,7 @@ def cronjob(data):
         print(len(article))
         new_contents = article[:6]
     else :
-        crawler.apply_async(args=[crawler_info['site'], crawler_info['article_num'], USER_AGENT])
+        crawler.apply_async(args=[crawler_info['site'], crawler_info['article_num']])
     
     # Add to database
     
