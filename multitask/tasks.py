@@ -31,10 +31,12 @@ def cronjob(data):
         number_of_article = round(crawler_info['article_num']/2)
         #bloomberg_article = crawler.apply_async(args=[1, number_of_article])
         bloomberg_article = crawler(1, number_of_article)
+        print("bloomberg finished")
         if ( len(bloomberg_article) == 0 ):
             number_of_article = crawler_info['article_num']
         #tnw_article = crawler.apply_async(args=[2, number_of_article])
         tnw_article = crawler(2, number_of_article)
+        print("tnw finished")
     
         article.extend(tnw_article)
         article.extend(bloomberg_article)
@@ -46,7 +48,7 @@ def cronjob(data):
         print(len(article))
         new_contents = article
     else :
-        crawlerc(crawler_info['site'], crawler_info['article_num'])
+        crawler(crawler_info['site'], crawler_info['article_num'])
     
     # Add to database
     
